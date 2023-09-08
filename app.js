@@ -40,8 +40,8 @@ const company = {
 
 let employee = company.next()
 
-while(!employee.done) { // negates done: false to !false returning true enter loop and negates done: true to !true returning false to not enter the loop
-    console.log(!employee.done)
+while(!employee.done) { // negates done: false to !false returning true to enter the loop and negates done: true to !true returning false to not enter the loop
+    // console.log(!employee.done)
     console.log(company.currEmployee, employee.value, employee);
     employee = company.next()
 }
