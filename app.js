@@ -276,6 +276,28 @@ while(!employee.done) { // negates done: false to !false returning true to enter
 
 // !!! The Eeflect API !!!
 
+// const course = {
+//     title: 'JavaScript - The Complete Guide'
+// };
+
+// Reflect.setPrototypeOf(course, {
+//     toString() {
+//         return this.title;
+//     }
+// })
+
+// console.log('Onject property before deleteProperty- ', course.toString())
+
+// Reflect.deleteProperty(course, 'title'); // The Reflect API offers a deleteProperty method
+
+// // Object.deleteProperty(course, 'title') // The Object API does not have a deleteProperty method 
+
+// // delete course.title; //the traditional way to a delete an Objects property. 
+
+// console.log('Onject property after deleteProperty- ',course)
+
+// !!! The Proxy API !!!
+
 const course = {
     title: 'JavaScript - The Complete Guide'
 };
@@ -286,15 +308,28 @@ Reflect.setPrototypeOf(course, {
     }
 })
 
-console.log('Onject property before deleteProperty- ', course.toString())
-
-Reflect.deleteProperty(course, 'title'); // The Reflect API offers a deleteProperty method
-
+// console.log('Onject property before deleteProperty- ', course.toString())
+// Reflect.deleteProperty(course, 'title'); // The Reflect API offers a deleteProperty method
 // Object.deleteProperty(course, 'title') // The Object API does not have a deleteProperty method 
-
 // delete course.title; //the traditional way to a delete an Objects property. 
+// console.log('Onject property after deleteProperty- ',course)
+console.log(course)
 
-console.log('Onject property after deleteProperty- ',course)
+const courseHandler = {
+    get(obj, propertyName) { //handler is executed when someone tries to read/access a value from the wrapped object. takes 2 args, the wrapped obj and the property name in the obj being accessed
+        console.log(propertyName); // logs property key being accessed
+        // return obj[propertyName]; //defines what the get trap returns. here it returns the value in the poperty being accessed
+        // return 'Traped cha boyee' // can return anything if access on property is attempted
+        if (propertyName === 'length') { // action for access attemt on a specific property key 
+            return 0;
+        }
+        return obj[propertyName] || '- Not Found'; // if an attempt is made on a property that does not exist
 
-// The Proxy API
+    }
+}
+
+const pCourse = new Proxy(course, courseHandler) // instantiates the Proxy Object and creates a new Proxy Object. constructor takes 2 args- the object where the proxy will be applied as an argument and wraps around it. and also takes a hadler object that the custom behavior of the proxy
+// console.log(pCourse.title);
+// console.log(course, pCourse)
+console.log(pCourse.title, pCourse.length, pCourse.rating)//read attemps on Proxy Object pCourse
 
