@@ -374,8 +374,11 @@ const courseHandler = {
     },
     // set(obj, propertyName, newValue) 
     set(obj, propertyName, newValue) { // takes 3 args. used to validate, lock down, or forward to set value
-        obj[propertyName] = true
-        obj[propertyName] = newValue;
+        console.log('Setting Data...')
+        if (propertyName === 'rating') { // blocks access to setting rating property by returning
+            return;
+        }
+        obj[propertyName] = newValue; // sets new property value
     }
 }
 
