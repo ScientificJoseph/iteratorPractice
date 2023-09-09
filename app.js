@@ -274,7 +274,6 @@ while(!employee.done) { // negates done: false to !false returning true to enter
 // const djs = ['Tray', 'Swift'];//array is simply an object with the Symbol(Symbol.iterator): ƒ values(). which is a generator function that yields an iterator object with next(). The length property of th array in tandem with the Genrator help control what values are return from the array
 // console.log(djs)
 
-
 // !!! The Eeflect API !!!
 
 const course = {
