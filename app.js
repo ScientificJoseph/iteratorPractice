@@ -216,6 +216,8 @@ const company = {
 
 
 
-for (const employee of company) { // for of loop goes therough onject(complany) being looped through and searches for Symbol.iterator then executes the function if finds which should be a Generator. Executes next as long as done is not true
+for (const employee of company) { // for of loop iterates therough object(company) being looped through and searches for Symbol.iterator then executes the function if finds which should be a Generator. Executes next as long as done is not true
     console.log(employee);
 }
+let ride = [...company]// spread operator looks for Symbol.iterator then goes through all of the values and adds them as elements of array
+console.log(ride) 
