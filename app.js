@@ -1,10 +1,10 @@
 import { word } from "./text.js";
-import { company } from './iteratorEx.js'
+// import { company } from './iteratorEx.js'
 word()
-console.log(company.next())
-console.log(company.next())
-console.log(company.next())
-console.log(company.next())
+// console.log(company.next())
+// console.log(company.next())
+// console.log(company.next())
+// console.log(company.next())
 
 // iterator - object with a next method
 
@@ -28,34 +28,36 @@ console.log(company.next())
 // console.log(company.next())
 // console.log(company.next())
 
-// Example 2 (next with loop)
+// Example 2 (next with while loop)
 
-// const company = {
-//     currEmployee: 0,
-//     employees: ['Donna', 'Thelma', 'Laura'],
-//     next() { //makes company object iterable. returns an object with a value property and a done property
-//         if (this.currEmployee >= this.employees.length){
-//             return {
-//                 value: this.currEmployee, 
-//                 done: true // signals when out of employees. sets done to true
-//             } 
-//         }
-//         const returnValue =  {
-//             value: this.employees[this.currEmployee], 
-//             done: false // sinals that their are still employees. sets done to false
-//         }; 
-//         this.currEmployee++;
-//         // console.log(returnValue)
-//         return returnValue;
-//     }
-// }
+const company = {
+    currEmployee: 0, //incrimented and used as a condition for the loop
+    employees: ['Donna', 'Thelma', 'Laura'],
+    next() { //makes company object iterable. returns an object with a value property and a done property
+        if (this.currEmployee >= this.employees.length){
+            return {
+                value: this.currEmployee, //ivalue of iterator
+                done: true // signals when out of employees. sets done to true which will be negated to false on evaluation in the while loop conditional check
+            } 
+        }
+        const returnValue =  {
+            value: this.employees[this.currEmployee], //employee at the time the value of iterator is incrimented
+            done: false // signals that their are still employees. sets done to false which will be negated to true on evaluation in the while loop conditional check
+        }; 
+        this.currEmployee++;
+        return returnValue;
+    }
+}
+let employee = company.next() //while loop adds looping logic to next method
+while(!employee.done) { // negates done: false to !false returning true to enter the loop and negates done: true to !true returning false to not enter the loop
+    // console.log(!employee.done)
+    console.log(company.currEmployee, employee.value, employee);
+    const indy = company.employees.forEach((ele, index) =>{
+        // console.log(`${ele}'s index is ${index} and the incrimenters value is ${company.currEmployee}`)
+    })
+    employee = company.next()
+}
 
-// let employee = company.next() //while loop adds looping logic to next method
-// while(!employee.done) { // negates done: false to !false returning true to enter the loop and negates done: true to !true returning false to not enter the loop
-//     // console.log(!employee.done)
-//     console.log(company.currEmployee, employee.value, employee);
-//     employee = company.next()
-// }
 
 //Example 3 (Symbol.iterator)
 
@@ -272,4 +274,28 @@ console.log(company.next())
 // const djs = ['Tray', 'Swift'];//array is simply an object with the Symbol(Symbol.iterator): ƒ values(). which is a generator function that yields an iterator object with next(). The length property of th array in tandem with the Genrator help control what values are return from the array
 // console.log(djs)
 
+
+// !!! The Eeflect API !!!
+
+const course = {
+    title: 'JavaScript - The Complete Guide'
+};
+
+Reflect.setPrototypeOf(course, {
+    toString() {
+        return this.title;
+    }
+})
+
+console.log('Onject property before deleteProperty- ', course.toString())
+
+Reflect.deleteProperty(course, 'title'); // The Reflect API offers a deleteProperty method
+
+// Object.deleteProperty(course, 'title') // The Object API does not have a deleteProperty method 
+
+// delete course.title; //the traditional way to a delete an Objects property. 
+
+console.log('Onject property after deleteProperty- ',course)
+
+// The Proxy API
 
